@@ -185,9 +185,5 @@ export class AwsWorkspacesWebSagemakerStudioStack extends cdk.Stack {
     });
     
     new cdk.CfnOutput(this, 'portal-Endpoint', { value: `https://${portal.attrPortalEndpoint}` });
-    new cdk.CfnOutput(this, 'direct-Endpoint', { 
-      value: `https://studio-${domain.attrDomainId}.studio.${cdk.Aws.REGION}.sagemaker.aws/home?tab=Overview`
-    });
-
   }
 }
