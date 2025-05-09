@@ -26,7 +26,7 @@ This application is developed using AWS CDK in TypeScript.
   * ![image](signin.PNG "Signing in Workspace Secure Browser")
 * Once the sign In page is displayed, click on the Sign In button.  It will open the IDP Sign In page.
   * ![image](authenticate.PNG "Authenticating with IDP")
-* After authenticated the Amazon Workspaces Secure Browser loading screen will display
+* After you are authenticated, the Amazon Workspaces Secure Browser loading screen will display
   * ![image](starting-wsb.PNG "Starting Workspace Secure Browser")
 * Once the Workspace Secure Browser is ready, you will be presented with a Chrome browser
   * ![image](wsb-landing.PNG "Workspace Secure Browser landing page")
@@ -38,7 +38,8 @@ This application is developed using AWS CDK in TypeScript.
   * ![image](sagemaker-denied.PNG "Example of a Sagemaker failure from public browser")
 
 ## Considerations
-* There are many opportunities to simplify this solution. Please review docs for all the configurations (Browser settings, Data protection settings, etc.) you can perform with Amazon Workspaces Secure Browser.  
+* There are many opportunities to simplify this solution. Please review docs for all the configurations (Browser settings, Data protection settings, etc.) you can perform with Amazon Workspaces Secure Browser.
+* Amazon Workspaces Secure Browser can record user session events. You can review the logs in Amazon Kinesis Data Stream to support audit requirements.
 * The lambda is not performing any authentication or authorization.  You can re-authenticate with IDP and validate the userId before a pre-signed URL can be created.
 
 ## References
