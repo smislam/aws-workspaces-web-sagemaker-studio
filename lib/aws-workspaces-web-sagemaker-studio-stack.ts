@@ -8,7 +8,7 @@ import { NodejsFunction } from 'aws-cdk-lib/aws-lambda-nodejs';
 import { RetentionDays } from 'aws-cdk-lib/aws-logs';
 import { CfnDomain, CfnUserProfile } from 'aws-cdk-lib/aws-sagemaker';
 import { StringParameter } from 'aws-cdk-lib/aws-ssm';
-import { CfnIdentityProvider, CfnIpAccessSettings, CfnNetworkSettings, CfnPortal, CfnUserSettings } from 'aws-cdk-lib/aws-workspacesweb';
+import { CfnBrowserSettings, CfnIdentityProvider, CfnIpAccessSettings, CfnNetworkSettings, CfnPortal, CfnUserSettings } from 'aws-cdk-lib/aws-workspacesweb';
 import { Construct } from 'constructs';
 import path = require('path');
 
@@ -124,7 +124,30 @@ export class AwsWorkspacesWebSagemakerStudioStack extends cdk.Stack {
       removalPolicy: cdk.RemovalPolicy.DESTROY
     });
 
-    // const browserSettings = new CfnBrowserSettings(this, 'browser-settings');
+    const browserPolicy = {
+      chromePolicies: {
+        RestoreOnStartup: { 
+          value: 4
+        },
+        RestoreOnStartupURLs: {
+          value: [
+            api.url
+          ]
+        },
+        AllowDeletingBrowserHistory: {
+          value: true
+        },
+        IncognitoModeAvailability: {
+          value: 1
+        }
+      }
+    }
+
+    const browserSettings = new CfnBrowserSettings(this, 'browser-settings', {
+      browserPolicy: JSON.stringify(browserPolicy)
+    });
+    browserSettings.node.addDependency(api);
+
     // const dataProtectionSettings = new CfnDataProtectionSettings(this, 'data-protection-settings');
     // const ipAccessSettings = new CfnIpAccessSettings(this, 'ip-access-settings', {
     //   ipRules: [{
@@ -168,10 +191,10 @@ export class AwsWorkspacesWebSagemakerStudioStack extends cdk.Stack {
       maxConcurrentSessions: 2,
       userSettingsArn: userSettings.attrUserSettingsArn,
       networkSettingsArn: networkSettings.attrNetworkSettingsArn,
+      browserSettingsArn: browserSettings.attrBrowserSettingsArn,
       // ipAccessSettingsArn: ipAccessSettings.attrIpAccessSettingsArn,
       // trustStoreArn: trustStore.attrTrustStoreArn,
       // userAccessLoggingSettingsArn: userAccessLoggingSettings.attrUserAccessLoggingSettingsArn,
-      // browserSettingsArn: browserSettings.attrBrowserSettingsArn,
       // dataProtectionSettingsArn: dataProtectionSettings.attrDataProtectionSettingsArn,
     });
   

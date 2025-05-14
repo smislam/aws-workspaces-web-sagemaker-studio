@@ -37,6 +37,11 @@ This application is developed using AWS CDK in TypeScript.
 * Use the same API Gateway endpoint URL on a different tab that is not using Amazon Workspaces Secure Browser
   * ![image](sagemaker-denied.PNG "Example of a Sagemaker failure from public browser")
 
+### `Update 5/14/2025:`
+  * Modified the code to add sagemaker url as a startup url so that you do not have to type that in manually.  With this change:
+    * After authentication, you will be automatically redirected to Sagemaker Studio
+    * If you close the primary tab, it will default to Sagemaker Studio
+
 ## Considerations
 * There are many opportunities to simplify this solution. Please review docs for all the configurations (Browser settings, Data protection settings, etc.) you can perform with Amazon Workspaces Secure Browser.
 * Amazon Workspaces Secure Browser can record user session events. You can review the logs in Amazon Kinesis Data Stream to support audit requirements.
