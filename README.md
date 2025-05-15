@@ -1,5 +1,5 @@
 # Use Amazon Workspaces Secure Browser to Secure Access to AWS Services like: Sagemaker Studio, QuickSight, Athena, etc.
-It has always been a problem to provide secure access to Amazon resources that has public endpoints.  The user traffic is routed over the public internet which can lead to data breach and proliferation. In this example, we try to mitigate all these using Amazon VPC Endpoints, Source Restrictions and secure access using Amazon Workspaces Secure Browser. Amazon Workspaces Secure Browser is a great product that restricts user access and provides a secured tunnel to access browser-based AWS services.  In addition to logging user Session data, Amazon Workspaces Secure Browser can also restrict access to resources based on specific IP for corporate user or a group of IPs.
+It has always been a problem to provide secure access to Amazon resources that has public endpoints.  The user traffic is routed over the public internet which can lead to data breach and proliferation. In this example, we try to mitigate all these using Amazon VPC Endpoints, Source Restrictions and secure access using Amazon Workspaces Secure Browser. Amazon Workspaces Secure Browser is a great product that restricts user access and provides a secured tunnel to access browser-based AWS services.  In addition to logging user Session data, Amazon Workspaces Secure Browser can also restrict access to resources based on specific IP for corporate user or a group of IPs.  This code already implements Data Loss Prevention (DLP) by disallowing copying content out of the Amazon Workspaces Secure Browser session.  Copy into the session is allowed.
 
 Our example implements Amazon Sagemaker Studio with Amazon Workspaces Secure Browser.  However, this example can be easily adopted to implement other AWS Services.
 
@@ -37,13 +37,15 @@ This application is developed using AWS CDK in TypeScript.
 * Use the same API Gateway endpoint URL on a different tab that is not using Amazon Workspaces Secure Browser
   * ![image](sagemaker-denied.PNG "Example of a Sagemaker failure from public browser")
 
-### `Update 5/14/2025:`
-  * Modified the code to add sagemaker url as a startup url so that you do not have to type that in manually.  With this change:
-    * After authentication, you will be automatically redirected to Sagemaker Studio
-    * If you close the primary tab, it will default to Sagemaker Studio
+### Updates
+`Update 5/14/2025`
+  * Modified the code to add the API Gateway URL as a startup URL so that we do not have to type that in manually.  With this change:
+    * After authentication, we will be automatically redirected to Sagemaker Studio
+    * If we close the primary tab, it will default to Sagemaker Studio
 
 ## Considerations
-* There are many opportunities to simplify this solution. Please review docs for all the configurations (Browser settings, Data protection settings, etc.) you can perform with Amazon Workspaces Secure Browser.
+* There are many opportunities to simplify and further harden this solution further. Please review docs for all the configurations (Browser settings, Data protection settings, etc.) you can perform with Amazon Workspaces Secure Browser.
+* Create Route 53 domain for the application with TLS suppot.
 * Amazon Workspaces Secure Browser can record user session events. You can review the logs in Amazon Kinesis Data Stream to support audit requirements.
 * The lambda is not performing any authentication or authorization.  You can re-authenticate with IDP and validate the userId before a pre-signed URL can be created.
 

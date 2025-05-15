@@ -8,7 +8,7 @@ import { NodejsFunction } from 'aws-cdk-lib/aws-lambda-nodejs';
 import { RetentionDays } from 'aws-cdk-lib/aws-logs';
 import { CfnDomain, CfnUserProfile } from 'aws-cdk-lib/aws-sagemaker';
 import { StringParameter } from 'aws-cdk-lib/aws-ssm';
-import { CfnBrowserSettings, CfnIdentityProvider, CfnIpAccessSettings, CfnNetworkSettings, CfnPortal, CfnUserSettings } from 'aws-cdk-lib/aws-workspacesweb';
+import { CfnBrowserSettings, CfnIdentityProvider, CfnNetworkSettings, CfnPortal, CfnUserSettings } from 'aws-cdk-lib/aws-workspacesweb';
 import { Construct } from 'constructs';
 import path = require('path');
 
@@ -101,7 +101,6 @@ export class AwsWorkspacesWebSagemakerStudioStack extends cdk.Stack {
         }
       }
      }));
-
       
     signerLambda.node.addDependency(domain);
     signerLambda.node.addDependency(userProfile);
